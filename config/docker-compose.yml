@@ -5,7 +5,7 @@ services:
     image: postgres:15-alpine
     container_name: postgres-container
     env_file:
-      - /root/fastapi/.env
+      - .env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -27,6 +27,8 @@ services:
   redis:
     image: redis:7-alpine
     container_name: redis-container
+    env_file:
+      - .env
     volumes:
       - redis_data:/var/lib/redis/data
     command: >
@@ -45,10 +47,12 @@ services:
       - backend_net
 
   fastapi:
-    image: asdfrewqha/:latest
+    build: 
+      context: ../backend
+    image: back:latest
     container_name: fastapi-container
     env_file:
-      - /root/fastapi/.env
+      - .env
     restart: unless-stopped
     depends_on:
       postgres:
