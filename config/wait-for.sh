@@ -1,5 +1,3 @@
-#!/bin/sh
-
 if [ "$#" -lt 3 ]; then
   echo "Usage: $0 host port command..."
   exit 1
